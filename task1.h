@@ -1,7 +1,5 @@
 #pragma once
-#include <cmath>
-#include <iostream>
-#include <string>
+#include "include.h"
 
 constexpr auto GRADRAD = 0.01745329251994329576923690768489;
 constexpr auto RADGRAD = 57.295779513082320876798154814105;
@@ -12,7 +10,6 @@ class Figure
 public:
 	Figure() = default;
 	virtual double Arey() = 0;
-	//virtual double Arry(double a, double b, double angle) = 0;
 };
 
 
