@@ -1,9 +1,7 @@
 #pragma once
 #include "include.h"
 
-constexpr auto GRADRAD = 0.01745329251994329576923690768489;
-constexpr auto RADGRAD = 57.295779513082320876798154814105;
-constexpr auto PI = 3.1415926535897932384626433832795;
+
 
 class Figure
 {
@@ -27,7 +25,7 @@ public:
 
 	double Arey() override
 	{
-		return  (side_a * side_b) * sin(angle_ab * GRADRAD);
+		return  (side_a * side_b) * sin(angle_ab * constants::GRADRAD);
 	}
 };
 
@@ -40,7 +38,7 @@ public:
 	Circle(double D) : diameter(D) {}
 	double Arey() override
 	{
-		return   (PI * (diameter * diameter))/4;
+		return   (constants::PI * (diameter * diameter))/4;
 	}
 };
 
