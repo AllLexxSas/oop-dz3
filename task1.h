@@ -5,22 +5,31 @@
 
 class Figure
 {
+protected:
+	std::string nameFigure;
 public:
 	Figure() = default;
+	Figure(std::string& str) :nameFigure(str) {}
 	virtual double Arey() = 0;
+	virtual ~Figure() {}
+	virtual std::string & GetNameClass()
+	{
+		return nameFigure;
+	}
+	
 };
 
 
-class Parallelogramf : public Figure
+class Parallelogramf :  virtual public Figure
 {
 private:
 	double side_a;
 	double side_b;
 	double angle_ab;
-
+	
 public:
 	Parallelogramf() = default;
-	Parallelogramf (double a, double b, double angle):
+	Parallelogramf (double a, double b, double angle, std::string figName ="Parallelogramf"):Figure(figName),
 		side_a(a), side_b(b), angle_ab(angle){}
 
 	double Arey() override
@@ -29,33 +38,38 @@ public:
 	}
 };
 
-class Circle : public Figure
+class Circle : virtual public Figure
 {
 private:
 	double diameter;
-
+	
 public:
-	Circle(double D) : diameter(D) {}
+    explicit Circle(double D, std::string figName = "Circle") : Figure(figName), diameter(D) {}
 	double Arey() override
 	{
 		return   (constants::PI * (diameter * diameter))/4;
 	}
+
+	virtual std::string & GetNameClass()
+	{
+		return nameFigure;
+	}
 };
 
-class Square : public Parallelogramf
+class Square : virtual public Parallelogramf
 {
 private:
 	double side;
-
+	
 public:
-	Square(double side) : side(side) {}
+	explicit Square(double side, std::string figName = "Square") :Figure(figName), side(side) {}
 	double Arey() override
 	{
 		return side * side;
 	}
 };
 
-class Rhombus : public Parallelogramf
+class Rhombus :virtual public Parallelogramf
 {
 private:
 	double side_a;
@@ -63,28 +77,49 @@ private:
 
 
 public:
-	Rhombus(double side_a, double side_b) : side_a(side_a), side_b(side_b) {}
+	explicit Rhombus(double side_a, double side_b, std::string figName = "Rhombus") :Figure(figName), side_a(side_a), side_b(side_b) {}
 	double Arey() override
 	{
 		return (side_a * side_b) / 2;
 	}
+
 };
 
-void print(Figure* f)
+
+
+class PrintFigure
 {
-	std::cout << "площадь "  << " = " << f->Arey() << std::endl;
-}
+private:
+	Figure *m_figure;
+
+public:
+	PrintFigure(Figure * figure):m_figure (figure)
+	{
+		print();
+	}
+
+	void print()
+	{
+		std::cout << "площадь " << m_figure->GetNameClass() << " = " << m_figure->Arey() << std::endl;
+	}
+	~PrintFigure()
+	{
+		delete m_figure;
+	}
+};
 
 
 
 void task1()
 {
 	
-	print(new Parallelogramf(33.0, 66, 45));
+	PrintFigure(new Parallelogramf(33.0, 66, 45));
+	
+	
 
-	print(new Circle(44.0));
-	print(new Square(44.0));
-	print(new Rhombus(44.0, 23));
+	PrintFigure(new Circle(44.0));
+	PrintFigure(new Square(44.0));
+	PrintFigure(new Rhombus(44.0, 23));
 
 
 

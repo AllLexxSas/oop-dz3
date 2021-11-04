@@ -7,6 +7,6 @@ int main()
 {
 	setlocale(0, "rus");
 	//bj();
-	task3();
+	task1();
 	return 0;
 }
